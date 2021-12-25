@@ -31,12 +31,14 @@ public class DialogData : ScriptableObject
         [SerializeField] private int rightButtonNextDialogIndex;
         [SerializeField] private bool isHasReaction;
         [SerializeField] private bool isAngry;
+        [SerializeField] private bool isEndOfDialog;
 
         public string SentenceText => sentence;
         public Speaker Speaker => speaker;
         public bool SentenceWithChoice => sentenceWithChoice;
         public bool IsHasReaction => isHasReaction;
         public bool IsAngry => isAngry;
+        public bool IsEndOfDialog => isEndOfDialog; //ставить на непоследних репликах, если хочешь закончить это говно
 
         public int LeftButtonNextDialogIndex => leftButtonNextDialogIndex;
         public int RightButtonNextDialogIndex => rightButtonNextDialogIndex; //right always should be larger then left (sorry for govnocode)

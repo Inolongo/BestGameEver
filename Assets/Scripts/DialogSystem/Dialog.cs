@@ -111,6 +111,11 @@ namespace DefaultNamespace
                     {
                         _dialogCloudPlayer.InactivateButtons();
                     }
+
+                    if (sentence.IsEndOfDialog)
+                    {
+                        PleaseStopThisDialogForTheGodSake();
+                    }
                 }
                 else
                 {
@@ -120,7 +125,7 @@ namespace DefaultNamespace
                     {
                         dialogReaction.StartReaction();
                     }
-                    
+
                 }
 
                 yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
@@ -137,6 +142,7 @@ namespace DefaultNamespace
             _playerController.StartMovementWhenDialogEnded();
             Destroy(_dialogCloudPlayer.gameObject);
             Destroy(_dialogCloudNPC.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
