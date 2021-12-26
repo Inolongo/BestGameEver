@@ -8,15 +8,11 @@ public class FirstMushroomDialog : DialogReactions
 {
     [SerializeField] private ParticleSystem beerParticle;
     private PlayerController _playerController;
-    private Mushroom _mushroom;
     public bool IsFollowPlayer { get; private set; }
     public bool IsFighting { get; private set; }
 
 
-    private void Start()
-    {
-        _mushroom ??= FindObjectOfType<Mushroom>();
-    }
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {

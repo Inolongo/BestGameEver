@@ -100,16 +100,16 @@ namespace DefaultNamespace
 
                     if (sentence.IsHasReaction)
                     {
-                        if (sentence.IsAngry)
-                        {
-                            dialogReaction.IsAngry = true;
-                            
-                        }
                         dialogReaction.StartReaction();
                     }
                     else
                     {
                         _dialogCloudPlayer.InactivateButtons();
+                    }
+                    if (sentence.IsAngry)
+                    {
+                        dialogReaction.IsAngry = true;
+                            
                     }
 
                     if (sentence.IsEndOfDialog)
@@ -124,6 +124,11 @@ namespace DefaultNamespace
                     if (sentence.IsHasReaction)
                     {
                         dialogReaction.StartReaction();
+                    }
+
+                    if (sentence.IsEndOfDialog)
+                    {
+                        PleaseStopThisDialogForTheGodSake();
                     }
 
                 }

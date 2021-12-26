@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d0a2efc0f6247ab9152874883eebc1a, type: 3}
-  m_Name: DialogData
+  m_Name: TreeDialog
   m_EditorClassIdentifier: 
   dialogSentences:
   - speaker: 1
@@ -21,12 +21,16 @@ MonoBehaviour:
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 0
   - speaker: 0
     sentence: "\u042D\u044D\u044D\u044D, \u043D\u0435 \u0441\u043E\u0431\u0438\u0440\u0430\u043B\u0430\u0441\u044C"
     sentenceWithChoice: 0
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 0
   - speaker: 1
     sentence: "\u0424\u0443\u0443\u0445, \u0445\u043E\u0440\u043E\u0448\u043E, \u0430
       \u0442\u043E \u043D\u0435\u0434\u0430\u0432\u043D\u043E \u043D\u0430 \u043C\u0435\u043D\u044F
@@ -38,6 +42,8 @@ MonoBehaviour:
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 0
   - speaker: 0
     sentence: "\u041F\u043E\u043C\u043E\u0447\u044C \u0434\u0435\u0440\u0435\u0432\u0443
       \u043D\u0430\u0439\u0442\u0438 \u0438 \u043E\u0431\u043E\u0441\u0441\u0430\u0442\u044C
@@ -46,6 +52,8 @@ MonoBehaviour:
     leftButtonNextDialogIndex: 4
     rightButtonNextDialogIndex: 5
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 0
   - speaker: 0
     sentence: "\u041D\u0435, \u044F \u043B\u0443\u0447\u0448\u0435 \u043D\u0430\u0441\u0440\u0443
       \u043D\u0430 \u0442\u0435\u0431\u044F)))"
@@ -53,6 +61,8 @@ MonoBehaviour:
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 0
   - speaker: 0
     sentence: "\u0414\u0430, \u043A\u043E\u043D\u0435\u0447\u043D\u043E, \u0447\u0443\u0434\u043D\u0435\u0441\u043D\u0430\u044F
       \u0441\u043E\u0441\u043D\u0430, \u044F \u043F\u043E\u043C\u043E\u0433\u0443
@@ -61,9 +71,13 @@ MonoBehaviour:
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 0
+    isAngry: 0
+    isEndOfDialog: 1
   - speaker: 1
     sentence: "\u0420\u0430\u0437 \u0442\u0430\u043A, \u0442\u043E \u043F\u043E\u043B\u0443\u0447\u0430\u0439!!"
     sentenceWithChoice: 0
     leftButtonNextDialogIndex: 0
     rightButtonNextDialogIndex: 0
     isHasReaction: 1
+    isAngry: 0
+    isEndOfDialog: 0
