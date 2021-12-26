@@ -9,7 +9,7 @@ namespace DefaultNamespace
         [SerializeField] private Camera mainCamera;
         [SerializeField] private float offsetX;
         [SerializeField] private float lerpSpeed;
-        private PlayerController _playerController;
+        [SerializeField] private PlayerController playerController;
 
 
         private float _yMin;
@@ -21,9 +21,9 @@ namespace DefaultNamespace
 
         private void OnValidate()
         {
-            if (_playerController is null)
+            if (playerController is null)
             {
-                _playerController = FindObjectOfType<PlayerController>();
+                playerController = FindObjectOfType<PlayerController>();
             }
         }
 
@@ -34,6 +34,10 @@ namespace DefaultNamespace
             _yMax = bounds.max.y;
             _xMax = bounds.max.x;
             _xMin = bounds.min.x;
+            if (mainCamera is null)
+            {
+                mainCamera = GetComponent<Camera>();
+            }
 
             _camHeight = mainCamera.orthographicSize;
             _camWidth = mainCamera.aspect * _camHeight;
@@ -43,7 +47,7 @@ namespace DefaultNamespace
         void Update()
         {
             float offset;
-            if (_playerController.GetComponent<SpriteRenderer>().flipX)
+            if (playerController.GetComponent<SpriteRenderer>().flipX)
             {
                 offset = -offsetX;
             }
@@ -52,7 +56,7 @@ namespace DefaultNamespace
                 offset = offsetX;
             }
 
-            var position = _playerController.gameObject.transform.position;
+            var position = playerController.gameObject.transform.position;
             var cameraY = Mathf.Clamp(position.y,
                 _yMin + _camHeight, _yMax - _camHeight);
             var cameraX = Mathf.Clamp(position.x + offset, _xMin + _camWidth,
