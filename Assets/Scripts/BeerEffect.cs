@@ -29,7 +29,7 @@ internal class BeerEffect : DialogReactions
 
     private IEnumerator WhiteSpiteWait()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (_playerController != null)
         {
             beerParticle.Play();

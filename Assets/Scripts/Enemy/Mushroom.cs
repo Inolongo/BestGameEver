@@ -12,22 +12,22 @@ namespace Enemy
         protected override bool IsAngry { get; set; }
 
         [SerializeField] private FirstMushroomDialog firstMushroomDialog;
-        //[SerializeField] private SecondMushroomDialog secondMushroomDialog;
+        [SerializeField] private SecondMushroomDialog secondMushroomDialog;
 
 
         private void Start()
         {
             firstMushroomDialog ??= FindObjectOfType<FirstMushroomDialog>();
-            //secondMushroomDialog ??= FindObjectOfType<SecondMushroomDialog>();
+            secondMushroomDialog ??= FindObjectOfType<SecondMushroomDialog>();
             Animator = GetComponent<Animator>();
 
         }
 
         private void Update()
         {
-            if (firstMushroomDialog.IsFollowPlayer)
+            if (firstMushroomDialog.IsFollowPlayer || secondMushroomDialog.IsFollowPlayer)
             {
-                if (firstMushroomDialog.IsFighting)
+                if (firstMushroomDialog.IsFighting || secondMushroomDialog.IsFighting)
                 {
                     IsAngry = true;
                     if (TryAttack())

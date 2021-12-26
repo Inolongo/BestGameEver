@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DefaultNamespace;
-using DG.Tweening;
+using Enemy;
 using UnityEngine;
 
-internal class SecondMushroomDialog : DialogReactions
+public class SecondMushroomDialog : DialogReactions
 {
     [SerializeField] private ParticleSystem beerParticle;
     private PlayerController _playerController;
@@ -11,7 +12,7 @@ internal class SecondMushroomDialog : DialogReactions
     public bool IsFighting { get; private set; }
 
 
-
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,16 +30,27 @@ internal class SecondMushroomDialog : DialogReactions
     {
         if (!IsAngry)
         {
-            beerParticle.Play();
+            StartCoroutine(WhiteSpiteWait());
+            IsFollowPlayer = true;
         }
         else
         {
-
-            IsFollowPlayer = true;
             StartCoroutine(StartFighting());
         }
+        
     }
-    
+
+    private IEnumerator WhiteSpiteWait()
+    {
+        yield return new WaitForSeconds(1);
+        if (_playerController != null)
+        {
+            beerParticle.Play();
+            _playerController.GetComponent<SpriteRenderer>().color = Color.white;
+            _playerController.ChangeHealth(changedHealthPoints);
+        }
+    }
+
     private IEnumerator StartFighting()
     {
         yield return new WaitForSeconds(1);

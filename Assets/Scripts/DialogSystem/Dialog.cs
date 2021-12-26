@@ -98,6 +98,11 @@ namespace DefaultNamespace
                         _choice = Choice.None;
                     }
 
+                    if (sentence.IsAngry)
+                    {
+                        dialogReaction.IsAngry = true;
+                    }
+
                     if (sentence.IsHasReaction)
                     {
                         dialogReaction.StartReaction();
@@ -106,11 +111,7 @@ namespace DefaultNamespace
                     {
                         _dialogCloudPlayer.InactivateButtons();
                     }
-                    if (sentence.IsAngry)
-                    {
-                        dialogReaction.IsAngry = true;
-                            
-                    }
+
 
                     if (sentence.IsEndOfDialog)
                     {
@@ -130,7 +131,6 @@ namespace DefaultNamespace
                     {
                         PleaseStopThisDialogForTheGodSake();
                     }
-
                 }
 
                 yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
