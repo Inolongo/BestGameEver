@@ -30,7 +30,7 @@ internal class PissingTree : DialogReactions
 
     private IEnumerator YellowSpriteWait()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (_playerController == null) yield break;
         _playerController.GetComponent<SpriteRenderer>().DOColor(Color.yellow, 2f);
         _playerController.ChangeHealth(changedHealthPoints);
