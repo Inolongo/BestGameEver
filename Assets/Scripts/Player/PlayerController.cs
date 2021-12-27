@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerSpeed;
     [SerializeField] private float damage;
     [SerializeField] private float attackRange;
+    [SerializeField] private float dashForce;
+    [SerializeField] private float dashDuration;
     
     public event Action<float> HealthChanged;
     public float Health { get; private set; } = 100f;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int VelocityY = Animator.StringToHash("velocityY");
     private static readonly int IsRun = Animator.StringToHash("isRun");
     private static readonly int IsAttack = Animator.StringToHash("isAttack");
+    private static readonly int IsDash = Animator.StringToHash("isDash");
     private float _axisX;
     private EnemyPrototype _enemy;
 
@@ -40,6 +43,10 @@ public class PlayerController : MonoBehaviour
         Run();
         Jump();
         Attack();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            StartCoroutine(Dash());
+        }
         
     }
 
@@ -88,6 +95,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             GetComponent<SpriteRenderer>().flipX = false;
+            Debug.Log("run");
             _isRun = true;
         }
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
@@ -113,6 +121,29 @@ public class PlayerController : MonoBehaviour
             _isOnGround = false;
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        Debug.Log(_rigidbody.velocity);
+        
+        if (GetComponent<SpriteRenderer>().flipX)
+        {
+            _rigidbody.AddForce(Vector2.left * dashForce, ForceMode2D.Impulse);
+            _animator.SetBool(IsDash, true);
+            
+        }
+        else
+        {
+            _rigidbody.AddForce(Vector2.right * dashForce, ForceMode2D.Impulse);
+            _animator.SetBool(IsDash, true);
+
+
+        }
+        
+        yield return new WaitForSeconds(dashDuration);
+        _animator.SetBool(IsDash, false);
+
     }
 
     private void Attack()
