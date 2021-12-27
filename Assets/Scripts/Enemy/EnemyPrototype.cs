@@ -17,12 +17,12 @@ namespace Enemy
 
         private PlayerController _playerController;
         protected Animator Animator;
-        private static readonly int IsAttack = Animator.StringToHash("isAttack");
         private Coroutine _startAttackRoutine;
         private float direction;
         protected abstract bool IsAngry { get; set; }
         protected bool IsRunning {get; private set; }
         protected bool IsEnemyDead{get ; private set;}
+        
         protected SpriteRenderer spriteRenderer;
 
         private void Awake()
@@ -30,7 +30,7 @@ namespace Enemy
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        void OnEnable()
+        void OnValidate()
         {
             _playerController ??= FindObjectOfType<PlayerController>();
             
