@@ -49,6 +49,12 @@ namespace Enemy
             {
                 DiedOfCringe();
             }
+
+            if (secondMushroomDialog.IsNeedless)
+            {
+                gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
         }
 
         private void DiedOfCringe()

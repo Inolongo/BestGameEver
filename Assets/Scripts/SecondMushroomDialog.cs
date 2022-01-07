@@ -10,6 +10,8 @@ public class SecondMushroomDialog : DialogReactions
     private PlayerController _playerController;
     public bool IsFollowPlayer { get; private set; }
     public bool IsFighting { get; private set; }
+    
+    public bool IsNeedless { get; private set; }
 
 
    
@@ -31,7 +33,7 @@ public class SecondMushroomDialog : DialogReactions
         if (!IsAngry)
         {
             StartCoroutine(WhiteSpiteWait());
-            IsFollowPlayer = true;
+            IsNeedless = true;
         }
         else
         {
