@@ -1,4 +1,5 @@
-﻿using Enemy;
+﻿using System;
+using Enemy;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,46 +8,53 @@ namespace DefaultNamespace
     {
         protected override bool IsAngry { get; set; }
         [SerializeField] private BossDialog bossDialog;
+        [SerializeField] private ParticleSystem pissParticle;
         
         private static readonly int IsRun = Animator.StringToHash("isRun");
         private static readonly int IsAttack = Animator.StringToHash("IsAttack");
         private static readonly int IsDead = Animator.StringToHash("IsDead");
-
+        
         void Start()
         {
-            
+            bossDialog.SuperAttackStarted += SuperPissAttack;
         }
 
         void Update()
         {
-            if (!IsRunning) return;
-            if (bossDialog.IsFighting)
+            if (bossDialog.IsFollowPlayer)
             {
-                IsAngry = true;
-                if (TryAttack())
+                if (bossDialog.IsFirstAttack)
                 {
-                    Animator.SetBool(IsAttack, true);
                 }
-                else
+                if (bossDialog.IsFighting)
                 {
-                    Animator.SetBool(IsAttack, false);
+                    IsAngry = true;
+                    if (TryAttack())
+                    {
+                        Animator.SetBool(IsAttack, true);
+                    }
+                    else
+                    {
+                        Animator.SetBool(IsAttack, false);
                         
-                } 
-            }
-
-            if (bossDialog.IsFirstAttack)
-            {
+                    } 
+                }
                 
+                FollowPlayer();
+                Animator.SetBool(IsRun, IsRunning);
             }
-                
-            FollowPlayer();
-            Animator.SetBool(IsRun, IsRunning);
+            
         }
 
 
-        private void PissAttack()
+        private void SuperPissAttack()
         {
+            Instantiate(pissParticle, new Vector3(90, 0, 0), pissParticle.transform.rotation);
             
+            pissParticle.Play();
+            pissParticle.transform.Rotate(new Vector3(20, 0, 0) * Time.deltaTime);
+            bossDialog.SuperAttackStarted -= SuperPissAttack;
+
         }
         
     }

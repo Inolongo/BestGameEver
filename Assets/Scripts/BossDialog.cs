@@ -11,8 +11,12 @@ namespace DefaultNamespace
         public bool IsFighting { get; private set; }
         
         public bool IsFirstAttack { get; private set; }
+        public bool IsFollowPlayer { get; private set; }
 
-        private bool reactionStarted;
+        private bool _reactionStarted;
+        
+        public Action SuperAttackStarted;
+
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -21,26 +25,24 @@ namespace DefaultNamespace
             _playerController = (player as PlayerController);
         }
 
-        private void Update()
-        {
-            if (!reactionStarted) return;
-            pissAttack.Play();
-            pissAttack.transform.Rotate(new Vector3(20, 0, 0)*Time.deltaTime);
+       
            
-        }
+           
+        
 
         public override void StartReaction()
         {
-            //StartCoroutine(PissAttack());
             IsFighting = true;
+            IsFollowPlayer = true;
+            SuperAttackStarted?.Invoke();
             IsFirstAttack = true;
-
+            StartCoroutine(PissAttack());
         }
 
         private IEnumerator PissAttack()
         {
             yield return new WaitForSeconds(0.2f);
-            
+            pissAttack.Play();
         }
 
     }
