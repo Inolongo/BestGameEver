@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,6 +8,11 @@ namespace DefaultNamespace
     {
         private PlayerController _playerController;
         [SerializeField] private ParticleSystem pissAttack;
+        public bool IsFighting { get; private set; }
+        
+        public bool IsFirstAttack { get; private set; }
+
+        private bool reactionStarted;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -15,17 +21,26 @@ namespace DefaultNamespace
             _playerController = (player as PlayerController);
         }
 
+        private void Update()
+        {
+            if (!reactionStarted) return;
+            pissAttack.Play();
+            pissAttack.transform.Rotate(new Vector3(20, 0, 0)*Time.deltaTime);
+           
+        }
 
         public override void StartReaction()
         {
-            StartCoroutine(PissAttack());
+            //StartCoroutine(PissAttack());
+            IsFighting = true;
+            IsFirstAttack = true;
+
         }
 
         private IEnumerator PissAttack()
         {
-            yield return new WaitForSeconds(1);
-            pissAttack.transform.Rotate(180f, 0f, 0f);
-            pissAttack.Play();
+            yield return new WaitForSeconds(0.2f);
+            
         }
 
     }

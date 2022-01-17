@@ -34,12 +34,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         //GetComponent<SpriteRenderer>().color = Color.yellow; //for test
+
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+
         Run();
         Jump();
         Attack();
