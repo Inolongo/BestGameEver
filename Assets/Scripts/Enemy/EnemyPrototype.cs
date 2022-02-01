@@ -37,7 +37,6 @@ namespace Enemy
         }
         
 
-
         protected void FollowPlayer()
         {
             
@@ -108,7 +107,7 @@ namespace Enemy
 
         IEnumerator StartAttack()
         {
-           yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 2f);
+           yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.5f);
            //yield return new WaitForSeconds(1);
            //Animator.SetBool(IsAttack, true);
             _playerController.ChangeHealth(-damage);
@@ -122,10 +121,10 @@ namespace Enemy
             if (health <= 0)
             {
                 IsEnemyDead = true;
-                StartCoroutine(StartAttack());
+                StopCoroutine(StartAttack());
             }
-
         }
+        
 
        
 
