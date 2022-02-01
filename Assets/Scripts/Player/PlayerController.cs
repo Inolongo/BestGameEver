@@ -14,10 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashDuration;
-    
+
     public event Action<float> HealthChanged;
     public float Health { get; private set; } = 100f;
-    
+
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     private bool _isOnGround = true;
@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsRun = Animator.StringToHash("isRun");
     private static readonly int IsAttack = Animator.StringToHash("isAttack");
     private static readonly int IsDash = Animator.StringToHash("isDash");
+    private static readonly int IsDead = Animator.StringToHash("isDead");
     private float _axisX;
     private EnemyPrototype _enemy;
-
 
 
     private void Start()
@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
         Run();
         Jump();
         Attack();
@@ -49,7 +48,11 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
-        
+
+        if (Health <= 0)
+        {
+            Death();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -59,8 +62,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("ground");
             _isOnGround = true;
         }
-
-      
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -128,24 +129,20 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         Debug.Log(_rigidbody.velocity);
-        
+
         if (GetComponent<SpriteRenderer>().flipX)
         {
             _rigidbody.AddForce(Vector2.left * dashForce, ForceMode2D.Impulse);
             _animator.SetBool(IsDash, true);
-            
         }
         else
         {
             _rigidbody.AddForce(Vector2.right * dashForce, ForceMode2D.Impulse);
             _animator.SetBool(IsDash, true);
-
-
         }
-        
+
         yield return new WaitForSeconds(dashDuration);
         _animator.SetBool(IsDash, false);
-
     }
 
     private void Attack()
@@ -179,13 +176,18 @@ public class PlayerController : MonoBehaviour
 
         if (changedHealthPoints < 0)
         {
-           _animator.SetTrigger("takeDamage"); 
+            _animator.SetTrigger("takeDamage");
         }
-        
+
         HealthChanged?.Invoke(Health);
         Debug.Log(Health);
     }
-    
-    
-   
+
+    private void Death()
+    {
+        _animator.SetBool(IsDead, true);
+        Destroy(GetComponent<BoxCollider2D>());
+        Destroy(GetComponent<Rigidbody2D>());
+        //Destroy(this);
+    }
 }

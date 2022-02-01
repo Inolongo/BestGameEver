@@ -143,11 +143,19 @@ namespace DefaultNamespace
 
         private void PleaseStopThisDialogForTheGodSake()
         {
-            StopCoroutine(_startDialogRoutine);
             _playerController.StartMovementWhenDialogEnded();
             Destroy(_dialogCloudPlayer.gameObject);
             Destroy(_dialogCloudNPC.gameObject);
+            StartCoroutine(WaitUntilReactionEnds());
+        }
+
+        private IEnumerator WaitUntilReactionEnds()
+        {
+            yield return new WaitForSeconds(2);
+            StopCoroutine(_startDialogRoutine);
             gameObject.SetActive(false);
         }
+        
+        
     }
 }

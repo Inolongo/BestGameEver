@@ -10,6 +10,8 @@ public class FirstMushroomDialog : DialogReactions
     private PlayerController _playerController;
     public bool IsFollowPlayer { get; private set; }
     public bool IsFighting { get; private set; }
+    
+    public bool IsNeedless { get; private set; }
 
 
    
@@ -31,7 +33,8 @@ public class FirstMushroomDialog : DialogReactions
         if (!IsAngry)
         {
             StartCoroutine(WhiteSpiteWait());
-            IsFollowPlayer = true;
+            IsNeedless = true;
+
         }
         else
         {
@@ -48,6 +51,7 @@ public class FirstMushroomDialog : DialogReactions
             beerParticle.Play();
             _playerController.GetComponent<SpriteRenderer>().color = Color.white;
             _playerController.ChangeHealth(changedHealthPoints);
+           
         }
     }
 
