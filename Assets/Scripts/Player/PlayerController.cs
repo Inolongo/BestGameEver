@@ -185,9 +185,9 @@ public class PlayerController : MonoBehaviour
 
     private void Death()
     {
-        _animator.SetBool(IsDead, true);
+        _animator.SetTrigger(IsDead);
         Destroy(GetComponent<BoxCollider2D>());
         Destroy(GetComponent<Rigidbody2D>());
-        //Destroy(this);
+        Destroy(this);
     }
 }
