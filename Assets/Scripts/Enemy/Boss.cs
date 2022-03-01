@@ -11,8 +11,10 @@ namespace DefaultNamespace
         protected override bool IsAngry { get; set; }
         [SerializeField] private BossDialog bossDialog;
         [SerializeField] private SuperPissAttack pissParticlePrefab;
+        [SerializeField] private Vector3 pissAttackOffset;
 
-        private static readonly int IsRun = Animator.StringToHash("isRun");
+        private PlayerController _playerController;
+        private static readonly int IsRun = Animator.StringToHash("IsRun");
         private static readonly int IsAttack = Animator.StringToHash("IsAttack");
         private static readonly int IsDead = Animator.StringToHash("IsDead");
         
@@ -21,6 +23,7 @@ namespace DefaultNamespace
         private void Start()
         {
             Animator = GetComponent<Animator>();
+            _playerController ??= FindObjectOfType<PlayerController>();
         }
 
         private void Update()
@@ -32,29 +35,39 @@ namespace DefaultNamespace
                     bossDialog.SuperAttackStarted += SuperPissAttack;
                     bossDialog.IsFirstAttack = false;
                 }
-
+                IsAngry = true;
+    
                 if (bossDialog.IsFighting)
                 {
-                    IsAngry = true;
+                    
                     if (TryAttack())
                     {
                         Animator.SetBool(IsAttack, true);
+                        Debug.Log("boss pizdit player");
                     }
                     else
                     {
                         Animator.SetBool(IsAttack, false);
                     }
                 }
-
-                // FollowPlayer();
-                // Animator.SetBool(IsRun, IsRunning);
+                
+                if (!FindObjectOfType<SuperPissAttack>())
+                {
+                    FollowPlayer();
+                    Animator.SetBool(IsRun, IsRunning);
+                }
+                else
+                {
+                    Animator.SetBool(IsRun,false);
+                }
             }
         }
 
 
         private void SuperPissAttack()
         {
-            var superPissAttack = Instantiate(pissParticlePrefab, new Vector3(90, 1, 0),
+            var playerCoord = _playerController.transform.position;
+                var superPissAttack = Instantiate(pissParticlePrefab, playerCoord + pissAttackOffset,
                 pissParticlePrefab.transform.rotation);
             superPissAttack.OnPlayerDamage += SetPLayerDamage;
             superPissAttack.Play();

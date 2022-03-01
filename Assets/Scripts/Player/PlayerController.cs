@@ -181,6 +181,7 @@ public class PlayerController : MonoBehaviour
 
         HealthChanged?.Invoke(Health);
         Debug.Log(Health);
+        
     }
 
     private void Death()

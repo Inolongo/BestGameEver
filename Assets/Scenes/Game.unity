@@ -2725,7 +2725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222101534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 67.89, y: -4.81, z: 0}
+  m_LocalPosition: {x: 84.25, y: -4.81, z: 0}
   m_LocalScale: {x: 1.7621, y: 1.9322, z: 1}
   m_Children:
   - {fileID: 864132741}
@@ -2981,7 +2981,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 8d786d436f4daea4fa18195f2acf06fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23908178e2001454fa8e43799153bf4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -3048,7 +3048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  damage: 100
+  damage: 10
   attackRange: 3
   speed: 4
   followOffset: 6
@@ -4542,13 +4542,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  damage: 10
-  attackRange: 4
-  speed: 4
+  damage: 2
+  attackRange: 2
+  speed: 2
   followOffset: 4
   bossDialog: {fileID: 4672605671385700272}
   pissParticlePrefab: {fileID: 7996043892323681430, guid: fe7e54f1e1bea4f4491173a1b88adf22, type: 3}
-  animator: {fileID: 1928357714}
+  pissAttackOffset: {x: 4, y: 2, z: 0}
 --- !u!61 &1928357710
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4943,6 +4943,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1928357713}
     m_Modifications:
     - target: {fileID: 4277708171065933432, guid: 320e0e797bff2b340b7be84c3a60dd79, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277708171065933432, guid: 320e0e797bff2b340b7be84c3a60dd79, type: 3}
       propertyPath: lengthInSec
       value: 10
       objectReference: {fileID: 0}
@@ -5162,7 +5166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a8f79d8db540f5a4640296bebf1147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changedHealthPoints: 20
+  changedHealthPoints: 0
   IsAngry: 1
   pissAttack: {fileID: 4672605671385700271}
   IsFirstAttack: 0

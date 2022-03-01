@@ -59,12 +59,12 @@ namespace Enemy
             if (_playerController.transform.position.x < transform.position.x)
             {
                 direction = -1;
-                spriteRenderer.flipX = true;
+                spriteRenderer.flipX = false;
             }
             else
             {
                 direction = 1;
-                spriteRenderer.flipX = false;
+                spriteRenderer.flipX =true;
 
             }
             if (Vector3.Distance(transform.position, _playerController.gameObject.transform.position) >
@@ -100,6 +100,7 @@ namespace Enemy
             {
                 if (_startAttackRoutine != null) return false;
                 _startAttackRoutine = StartCoroutine(StartAttack());
+                Debug.Log("pizdyat aa");
                 return true;
             }
 
@@ -123,7 +124,8 @@ namespace Enemy
 
         protected IEnumerator StartAttack()
         {
-           yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.5f);
+           //yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 2f); //1.5f
+           yield return new WaitForSeconds(1.5f);
            SetPLayerDamage(damage);
            _startAttackRoutine = null;
         }
