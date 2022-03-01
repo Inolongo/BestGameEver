@@ -30,12 +30,28 @@ namespace Enemy
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             _playerController ??= FindObjectOfType<PlayerController>();
             
         }
-        
+
+        public void TakeDamage(float playerDamage)
+        {
+            health -= playerDamage;
+            Animator.SetTrigger("takeDamage");
+            
+            if (health <= 0)
+            {
+                IsEnemyDead = true;
+                StopCoroutine(StartAttack());
+            }
+        }
+
+        protected void SetPLayerDamage(float damage)
+        {
+            _playerController.ChangeHealth(-damage);
+        }
 
         protected void FollowPlayer()
         {
@@ -57,7 +73,7 @@ namespace Enemy
                 transform.position = new Vector2(transform.position.x + (speed * direction * Time.deltaTime),
                     transform.position.y);
 
-               if (IsRunning) return;
+                if (IsRunning) return;
                 
                 IsRunning = true;
 
@@ -75,11 +91,6 @@ namespace Enemy
             {
                 TryAttack();
             }
-        }
-
-        private float GetFollowOffset()
-        {
-            return !IsAngry ? followOffset : attackRange ;
         }
 
         protected bool TryAttack()
@@ -105,29 +116,16 @@ namespace Enemy
 
         }
 
-        IEnumerator StartAttack()
+        private float GetFollowOffset()
+        {
+            return !IsAngry ? followOffset : attackRange ;
+        }
+
+        protected IEnumerator StartAttack()
         {
            yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.5f);
-           //yield return new WaitForSeconds(1);
-           //Animator.SetBool(IsAttack, true);
-            _playerController.ChangeHealth(-damage);
-            _startAttackRoutine = null;
+           SetPLayerDamage(damage);
+           _startAttackRoutine = null;
         }
-
-        public void TakeDamage(float playerDamage)
-        {
-            health -= playerDamage;
-            Animator.SetTrigger("takeDamage");
-            if (health <= 0)
-            {
-                IsEnemyDead = true;
-                StopCoroutine(StartAttack());
-            }
-        }
-        
-
-       
-
-
     }
 }

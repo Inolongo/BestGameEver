@@ -9,8 +9,8 @@ namespace DefaultNamespace
         private PlayerController _playerController;
         [SerializeField] private ParticleSystem pissAttack;
         public bool IsFighting { get; private set; }
-        
-        public bool IsFirstAttack { get; private set; }
+
+        public bool IsFirstAttack;
         public bool IsFollowPlayer { get; private set; }
 
         private bool _reactionStarted;
@@ -25,16 +25,13 @@ namespace DefaultNamespace
             _playerController = (player as PlayerController);
         }
 
-       
-           
-           
+        
         
 
         public override void StartReaction()
         {
             IsFighting = true;
             IsFollowPlayer = true;
-            SuperAttackStarted?.Invoke();
             IsFirstAttack = true;
             StartCoroutine(PissAttack());
         }
@@ -42,7 +39,7 @@ namespace DefaultNamespace
         private IEnumerator PissAttack()
         {
             yield return new WaitForSeconds(0.2f);
-            pissAttack.Play();
+            SuperAttackStarted?.Invoke();
         }
 
     }
