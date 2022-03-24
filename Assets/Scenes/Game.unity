@@ -3052,6 +3052,7 @@ MonoBehaviour:
   attackRange: 3
   speed: 4
   followOffset: 6
+  attackSpeed: 1.5
   firstMushroomDialog: {fileID: 802815112}
   secondMushroomDialog: {fileID: 1506303629}
 --- !u!61 &1302407903
@@ -4546,6 +4547,7 @@ MonoBehaviour:
   attackRange: 2
   speed: 2
   followOffset: 4
+  attackSpeed: 1.2
   bossDialog: {fileID: 4672605671385700272}
   pissParticlePrefab: {fileID: 7996043892323681430, guid: fe7e54f1e1bea4f4491173a1b88adf22, type: 3}
   pissAttackOffset: {x: 4, y: 2, z: 0}
