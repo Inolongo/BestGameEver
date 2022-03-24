@@ -12,8 +12,7 @@ namespace DefaultNamespace
         [SerializeField] private BossDialog bossDialog;
         [SerializeField] private SuperPissAttack pissParticlePrefab;
         [SerializeField] private Vector3 pissAttackOffset;
-
-        private PlayerController _playerController;
+        
         private static readonly int IsRun = Animator.StringToHash("IsRun");
         private static readonly int IsAttack = Animator.StringToHash("IsAttack");
         private static readonly int IsDead = Animator.StringToHash("IsDead");
@@ -23,7 +22,6 @@ namespace DefaultNamespace
         private void Start()
         {
             Animator = GetComponent<Animator>();
-            _playerController ??= FindObjectOfType<PlayerController>();
         }
 
         private void Update()
@@ -39,16 +37,7 @@ namespace DefaultNamespace
     
                 if (bossDialog.IsFighting)
                 {
-                    
-                    if (TryAttack())
-                    {
-                        Animator.SetBool(IsAttack, true);
-                        Debug.Log("boss pizdit player");
-                    }
-                    else
-                    {
-                        Animator.SetBool(IsAttack, false);
-                    }
+                    TryAttack();
                 }
                 
                 if (!FindObjectOfType<SuperPissAttack>())

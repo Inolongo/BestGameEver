@@ -15,8 +15,9 @@ namespace Enemy
         [SerializeField] protected float speed;
         [SerializeField] protected float followOffset;
         [SerializeField] protected float attackSpeed;
+        protected readonly int IsAttack = Animator.StringToHash("IsAttack");
 
-        private PlayerController _playerController;
+        protected PlayerController _playerController;
         protected Animator Animator;
         private Coroutine _startAttackRoutine;
         private float direction;
@@ -29,12 +30,13 @@ namespace Enemy
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            Animator = GetComponent<Animator>();
         }
 
         private void OnValidate()
         {
             _playerController ??= FindObjectOfType<PlayerController>();
-            
+
         }
 
         public void TakeDamage(float playerDamage)
@@ -94,28 +96,27 @@ namespace Enemy
             }
         }
 
-        protected bool TryAttack()
+        protected void TryAttack()
+        
         {
             if (Vector3.Distance(transform.position, _playerController.gameObject.transform.position) <
                 attackRange)
             {
-                if (_startAttackRoutine != null) return false;
+                if (_startAttackRoutine != null) return;
+                Animator.SetBool(IsAttack, false);
+
                 _startAttackRoutine = StartCoroutine(StartAttack());
                 Debug.Log("pizdyat aa");
-                return true;
             }
 
             if (Vector3.Distance(transform.position, _playerController.gameObject.transform.position) >
                 attackRange)
             {
+                Animator.SetBool(IsAttack, false);
                 StopCoroutine(StartAttack());
-                return false;
-               _startAttackRoutine = null;
+                _startAttackRoutine = null;
                 
             }
-
-            return true;
-
         }
 
         private float GetFollowOffset()
@@ -127,8 +128,10 @@ namespace Enemy
         {
            //yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 2f); //1.5f
            yield return new WaitForSeconds(attackSpeed);
+           Animator.SetBool(IsAttack, true);
            SetPLayerDamage(damage);
            _startAttackRoutine = null;
+           //Animator.SetBool(IsAttack, false);
         }
     }
 }

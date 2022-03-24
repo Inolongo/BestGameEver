@@ -7,7 +7,8 @@ namespace Enemy
     public class Mushroom : EnemyPrototype
     {
         private static readonly int IsRun = Animator.StringToHash("isRun");
-        private static readonly int IsAttack = Animator.StringToHash("IsAttack");
+
+        //private static readonly int IsAttack = Animator.StringToHash("IsAttack");
         private static readonly int IsDead = Animator.StringToHash("IsDead");
         protected override bool IsAngry { get; set; }
 
@@ -20,7 +21,6 @@ namespace Enemy
             firstMushroomDialog ??= FindObjectOfType<FirstMushroomDialog>();
             secondMushroomDialog ??= FindObjectOfType<SecondMushroomDialog>();
             Animator = GetComponent<Animator>();
-
         }
 
         private void Update()
@@ -30,19 +30,11 @@ namespace Enemy
                 if (firstMushroomDialog.IsFighting || secondMushroomDialog.IsFighting)
                 {
                     IsAngry = true;
-                    if (TryAttack())
-                    {
-                        Animator.SetBool(IsAttack, true);
-                    }
-                    else
-                    {
-                        Animator.SetBool(IsAttack, false);
-                        
-                    }
+                    TryAttack();
                 }
+
                 FollowPlayer();
                 Animator.SetBool(IsRun, IsRunning);
-
             }
 
             if (IsEnemyDead)
@@ -63,9 +55,6 @@ namespace Enemy
             Destroy(GetComponent<BoxCollider2D>());
             Destroy(GetComponent<Rigidbody2D>());
             Destroy(this);
-
         }
-
-        
     }
 }
