@@ -40,6 +40,11 @@ namespace DefaultNamespace
                     TryAttack();
                 }
                 
+                if (IsEnemyDead)
+                {
+                    DiedOfCringe();
+                }
+                
                 if (!FindObjectOfType<SuperPissAttack>())
                 {
                     FollowPlayer();
@@ -60,6 +65,14 @@ namespace DefaultNamespace
                 pissParticlePrefab.transform.rotation);
             superPissAttack.OnPlayerDamage += SetPLayerDamage;
             superPissAttack.Play();
+        }
+        
+        private void DiedOfCringe()
+        {
+            Animator.SetBool(IsDead, IsEnemyDead);
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(this);
         }
     }
 }

@@ -53,6 +53,11 @@ public class PlayerController : MonoBehaviour
         {
             Death();
         }
+
+        if (_enemy != null && _enemy.IsEnemyDead)
+        {
+            _enemy = null;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

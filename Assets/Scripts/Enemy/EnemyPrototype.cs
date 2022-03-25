@@ -23,7 +23,7 @@ namespace Enemy
         private float direction;
         protected abstract bool IsAngry { get; set; }
         protected bool IsRunning {get; private set; }
-        protected bool IsEnemyDead{get ; private set;}
+        public bool IsEnemyDead{get ; private set;}
         
         protected SpriteRenderer spriteRenderer;
 
@@ -42,6 +42,8 @@ namespace Enemy
         public void TakeDamage(float playerDamage)
         {
             health -= playerDamage;
+            Debug.Log("poluchai fascist" + health)
+                ;
             Animator.SetTrigger("takeDamage");
             
             if (health <= 0)
@@ -126,12 +128,10 @@ namespace Enemy
 
         protected IEnumerator StartAttack()
         {
-           //yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 2f); //1.5f
-           yield return new WaitForSeconds(attackSpeed);
+            yield return new WaitForSeconds(attackSpeed);
            Animator.SetBool(IsAttack, true);
            SetPLayerDamage(damage);
            _startAttackRoutine = null;
-           //Animator.SetBool(IsAttack, false);
         }
     }
 }
