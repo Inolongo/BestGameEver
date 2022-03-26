@@ -54,10 +54,10 @@ public class PlayerController : MonoBehaviour
             Death();
         }
 
-        if (_enemy != null && _enemy.IsEnemyDead)
-        {
-            _enemy = null;
-        }
+        // if (_enemy != null && _enemy.IsEnemyDead)
+        // {
+        //     _enemy = null;
+        // }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,6 +74,14 @@ public class PlayerController : MonoBehaviour
         if (_enemy == null && other.TryGetComponent(typeof(EnemyPrototype), out var enemy))
         {
             _enemy = enemy as EnemyPrototype;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (_enemy != null && other.TryGetComponent(typeof(EnemyPrototype), out var enemy))
+        {
+            _enemy = null;
         }
     }
 
